@@ -2,7 +2,7 @@ import "./style.css";
 import { useState } from "react";
 
 function App() {
-  const maesot = ["1111"];
+  const maesot = [];
 
   const mywaddy = [];
 
@@ -35,7 +35,7 @@ function App() {
     else if (mandalay.includes(search)) {
       setResult(`Your item\n${search}\nis in Mandalay`);    
     }
-    
+
     else {
       setResult("Not found in any city");
     }
