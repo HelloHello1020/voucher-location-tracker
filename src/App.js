@@ -25,12 +25,12 @@ function App() {
   }, []);  
 
   const handleSearch = () => {
-    const searchNumber = Number(search.trim()); // Ensure it's a number
+    const searchNumber = String(search.trim()); // Ensure it's a number
     let found = false;
   
     for (const [location, numbers] of Object.entries(data)) {
       if (numbers.includes(searchNumber)) {
-        setResult(`Your item\n${searchNumber}\nis in ${location.charAt(0).toUpperCase() + location.slice(1)}`);
+        setResult(`Voucher-${searchNumber}\nis in ${location.charAt(0).toUpperCase() + location.slice(1)}`);
         found = true;
         break;
       }
