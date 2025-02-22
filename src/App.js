@@ -4,7 +4,7 @@ import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 function App() {
-  const locations = ["hpa-An", "maesot", "mandalay", "myawaddy", "yangon"];
+  const locations = ["hpa-An", "maesot", "mandalay", "myawaddy", "yangon", "chiang-Mai"];
   const [search, setSearch] = useState("");
   const [result, setResult] = useState("");
   const [data, setData] = useState({});
@@ -24,13 +24,17 @@ function App() {
     fetchData();
   }, []);  
 
+  const formatString = (str) => {
+    return str.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
   const handleSearch = () => {
-    const searchNumber = String(search.trim()); // Ensure it's a number
+    const searchNumber = String(search.trim());
     let found = false;
   
     for (const [location, numbers] of Object.entries(data)) {
       if (numbers.includes(searchNumber)) {
-        setResult(`Voucher-${searchNumber}\nis in ${location.charAt(0).toUpperCase() + location.slice(1)}`);
+        setResult(`Voucher-${searchNumber}\nis in ${formatString(location)}`);
         found = true;
         break;
       }
