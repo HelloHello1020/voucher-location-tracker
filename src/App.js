@@ -2,6 +2,8 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { Button, Input } from "antd"
+import {SearchOutlined} from "@ant-design/icons";
 
 function App() {
   const locations = ["hpa-An", "maesot", "mandalay", "myawaddy", "yangon", "chiang-Mai"];
@@ -49,13 +51,16 @@ function App() {
       <div className="overlay"></div>
 
       <h2>Search for a City</h2>
-      <input
+      <Input
+        size="large"
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Enter 4-digit number"
+        placeholder="Enter your voucher number"
+        style={{width: "225px"}}
       />
-      <button onClick={handleSearch}>Search</button>
+
+      <Button type="primary" icon={<SearchOutlined/>} onClick={handleSearch}>Search</Button>
       {result && <h1 className="tracking-result">{result}</h1>}
     </div>
   );
