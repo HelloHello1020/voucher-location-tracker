@@ -34,6 +34,12 @@ div {
   display: flex;
   gap: 3px;
 }
+
+.search-history {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
   
 @media (max-width: 350px) {
   .tracking-result {

@@ -2,66 +2,96 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Button, Input } from "antd"
-import {SearchOutlined} from "@ant-design/icons";
+import { Button, Input, List, Divider } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 function App() {
   const locations = ["hpa-An", "maesot", "mandalay", "myawaddy", "yangon", "chiang-Mai"];
   const [search, setSearch] = useState("");
   const [result, setResult] = useState("");
   const [data, setData] = useState({});
+  const [history, setHistory] = useState([]);  // For storing search history
 
   useEffect(() => {
     const fetchData = async () => {
       let tempData = {};
       for (const location of locations) {
-        const querySnapshot = await getDocs(collection(db, location));  
+        const querySnapshot = await getDocs(collection(db, location));
         querySnapshot.forEach((doc) => {
           tempData[location] = doc.data().numbers || [];
         });
       }
       setData(tempData);
     };
-  
+
     fetchData();
-  }, []);  
+  }, []);
 
   const formatString = (str) => {
     return str.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase());
-  }
+  };
 
   const handleSearch = () => {
     const searchNumber = String(search.trim());
     let found = false;
-  
+    let locationFound = "";
+
     for (const [location, numbers] of Object.entries(data)) {
       if (numbers.includes(searchNumber)) {
-        setResult(`Voucher-${searchNumber}\nis in ${formatString(location)}`);
+        locationFound = formatString(location);
+        setResult(`Voucher-${searchNumber} is in ${locationFound}`);
         found = true;
         break;
       }
     }
-  
-    if (!found) setResult("Not found in any city");
+
+    if (!found) {
+      setResult("Not found in any city");
+    }
+
+    // Update search history (store the last 10 searches)
+    setHistory((prev) => {
+      const newHistory = [`${searchNumber}: ${found ? locationFound : "Not found"}`, ...prev];
+      return newHistory.slice(0, 5);  // Keep only the last 10 searches
+    });
   };
-  
 
   return (
     <div className="app">
       <div className="overlay"></div>
 
-      <h2>Search for a City</h2>
+      <h1>Find which city your voucher is in</h1>
       <Input
         size="large"
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Enter your voucher number"
-        style={{width: "225px"}}
+        style={{ width: "225px" }}
       />
 
-      <Button type="primary" icon={<SearchOutlined/>} onClick={handleSearch}>Search</Button>
-      {result && <h1 className="tracking-result">{result}</h1>}
+      <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>Search</Button>
+      {result && 
+        <>
+          <h2 className="tracking-result">{result}</h2>
+          <Divider style={{ margin: "0", borderColor: "black", borderWidth: "2px", opacity: "0.2"}} />
+        </>
+      }
+
+      {history.length > 0 && (
+        <div className="search-history">
+          <h2>Search History</h2>
+          <List
+            size="large"
+            bordered
+            style={{border: "2px solid black", fontSize:"18px"}}
+            dataSource={history}
+            renderItem={(item) => (
+              <List.Item>{item}</List.Item>
+            )}
+          />
+        </div>
+      )}
     </div>
   );
 }
