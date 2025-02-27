@@ -19,7 +19,10 @@
   opacity: 0.3;
   z-index: -1;
 }
-  
+
+.title {
+  text-align: center;
+}
   
 select, input {
   padding: 8px;

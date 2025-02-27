@@ -52,7 +52,7 @@ function App() {
     // Update search history (store the last 10 searches)
     setHistory((prev) => {
       const newHistory = [`${searchNumber}: ${found ? locationFound : "Not found"}`, ...prev];
-      return newHistory.slice(0, 5);  // Keep only the last 10 searches
+      return newHistory.slice(0, 3);  // Keep only the last 10 searches
     });
   };
 
@@ -60,7 +60,7 @@ function App() {
     <div className="app">
       <div className="overlay"></div>
 
-      <h1>Find which city your voucher is in</h1>
+      <h1 className="title">Find which city your voucher is in</h1>
       <Input
         size="large"
         type="text"
@@ -82,7 +82,7 @@ function App() {
         <div className="search-history">
           <h2>Search History</h2>
           <List
-            size="large"
+            size="small"
             bordered
             style={{border: "2px solid black", fontSize:"18px"}}
             dataSource={history}
