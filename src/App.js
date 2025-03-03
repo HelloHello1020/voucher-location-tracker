@@ -76,7 +76,7 @@ function App() {
 
       {/* Show loading spinner and fetching message while fetching data */}
       {loading ? (
-        <div style={{ display: "flex", flexDirection: "column", textAlign: "center", marginTop: "20px" }}>
+        <div className="spin-container" style={{ display: "flex", flexDirection: "column", textAlign: "center", marginTop: "20px" }}>
           <Spin size="large" />
           <h1 style={{fontSize: "25px"}}>Fetching data...</h1>
         </div>
