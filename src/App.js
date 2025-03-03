@@ -2,7 +2,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Button, Input, List, Divider } from "antd";
+import { Button, Input, List, Divider, Spin } from "antd"; // Import Spin component for loading indicator
 import { SearchOutlined } from "@ant-design/icons";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   const [result, setResult] = useState("");
   const [data, setData] = useState({});
   const [history, setHistory] = useState([]);  // For storing search history
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,7 @@ function App() {
         });
       }
       setData(tempData);
+      setLoading(false); // Set loading to false once data is fetched
     };
 
     fetchData();
@@ -52,7 +54,7 @@ function App() {
     // Update search history (store the last 10 searches)
     setHistory((prev) => {
       const newHistory = [`${searchNumber}: ${found ? locationFound : "Not found"}`, ...prev];
-      return newHistory.slice(0, 3);  // Keep only the last 10 searches
+      return newHistory.slice(0, 3);  // Keep only the last 3 searches
     });
   };
 
@@ -70,13 +72,21 @@ function App() {
         style={{ width: "225px" }}
       />
 
-      <Button type="primary" icon={<SearchOutlined />} style={{color: "black", backgroundColor: "gold"}}onClick={handleSearch}>Search</Button>
-      {result && 
+      <Button type="primary" icon={<SearchOutlined />} style={{color: "black", backgroundColor: "gold"}} onClick={handleSearch}>Search</Button>
+
+      {/* Show loading spinner and fetching message while fetching data */}
+      {loading ? (
+        <div style={{ display: "flex", flexDirection: "column", textAlign: "center", marginTop: "20px" }}>
+          <Spin size="large" />
+          <h1 style={{fontSize: "25px"}}>Fetching data...</h1>
+        </div>
+      ) : (
+        result && 
         <>
           <h2 className="tracking-result">{result}</h2>
           <Divider style={{ margin: "0", borderColor: "black", borderWidth: "2px", opacity: "0.6"}} />
         </>
-      }
+      )}
 
       {history.length > 0 && (
         <div className="search-history">
@@ -104,7 +114,6 @@ function App() {
         alt="decorative"
         className="bottom-right-image decoration"
       />
-
     </div>
   );
 }
