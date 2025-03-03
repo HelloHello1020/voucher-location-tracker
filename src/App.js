@@ -70,11 +70,11 @@ function App() {
         style={{ width: "225px" }}
       />
 
-      <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>Search</Button>
+      <Button type="primary" icon={<SearchOutlined />} style={{color: "black", backgroundColor: "gold"}}onClick={handleSearch}>Search</Button>
       {result && 
         <>
           <h2 className="tracking-result">{result}</h2>
-          <Divider style={{ margin: "0", borderColor: "black", borderWidth: "2px", opacity: "0.2"}} />
+          <Divider style={{ margin: "0", borderColor: "black", borderWidth: "2px", opacity: "0.6"}} />
         </>
       }
 
@@ -84,7 +84,7 @@ function App() {
           <List
             size="small"
             bordered
-            style={{border: "2px solid black", fontSize:"18px"}}
+            style={{border: "2px solid black", fontSize:"18px", backgroundColor: "gold"}}
             dataSource={history}
             renderItem={(item) => (
               <List.Item>{item}</List.Item>
@@ -92,6 +92,19 @@ function App() {
           />
         </div>
       )}
+
+      <img
+        src="/thingyan-3-people.png" // Make sure this is the correct path
+        alt="decorative"
+        className="bottom-left-image decoration"
+      />
+
+      <img
+        src="/thingyan-1-people.png" // Make sure this is the correct path
+        alt="decorative"
+        className="bottom-right-image decoration"
+      />
+
     </div>
   );
 }

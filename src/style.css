@@ -43,9 +43,60 @@ div {
   flex-direction: column;
   text-align: center;
 }
-  
-@media (max-width: 350px) {
+
+.bottom-left-image {
+  position: fixed;
+  bottom: 20px;  /* Adjust as needed */
+  left: 0px;    /* Adjust as needed */
+  width: 400px;  /* Adjust the size as needed */
+  height: auto;
+  opacity: 0.9;  /* Adjust transparency if needed */
+  pointer-events: none;  /* Prevents the image from interfering with user clicks */
+}
+
+.bottom-right-image {
+  position: fixed;
+  bottom: 20px;  /* Adjust as needed */
+  right: 0px;    /* Adjust as needed */
+  width: 300px;  /* Adjust the size as needed */
+  height: auto;
+  opacity: 0.9;  /* Adjust transparency if needed */
+  pointer-events: none;  /* Prevents the image from interfering with user clicks */
+}
+
+@media (max-width: 1000px) {
+  .bottom-left-image {
+      width: 250px;
+  }
+  .bottom-right-image {
+      width: 350px;
+  }
+}
+
+@media (max-width: 850px) {
+  .bottom-left-image, .bottom-right-image {
+      width: 200px;
+  }
+}
+
+@media (max-width: 500px) {
+  .bottom-left-image, .bottom-right-image {
+      width: 150px;
+  }
+}
+
+@media (max-width: 400px) {
+  .bottom-left-image, .bottom-right-image {
+      width: 100px;
+  }
   .tracking-result {
     font-size: 25px;
+  }
+}
+
+@media (max-width: 300px) {
+  .bottom-left-image, .bottom-right-image {
+    bottom: 175px;
+    opacity: 0.7;
   }
 }
