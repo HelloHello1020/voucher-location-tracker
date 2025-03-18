@@ -6,7 +6,7 @@ import { Button, Input, List, Divider, Spin } from "antd"; // Import Spin compon
 import { SearchOutlined } from "@ant-design/icons";
 
 function App() {
-  const locations = ["cities", "thai-to-myanamr", "myanmar-to-thai"];
+  const locations = ["cities", "thai-to-myanmar", "myanmar-to-thai"];
   const [search, setSearch] = useState("");
   const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);  // For storing search history
